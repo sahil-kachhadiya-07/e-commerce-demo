@@ -1,0 +1,1 @@
+export {default as MainLogoIcon} from "./logo.svg"
