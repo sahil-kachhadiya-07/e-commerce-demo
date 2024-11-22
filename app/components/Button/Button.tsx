@@ -12,7 +12,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export enum ButtonVariant {
   PRIMARY = 'primary',
-  OUTLINE = 'outline',
+  SECONDARY = 'secondary',
   TEXT = 'text'
 }
 
@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const renderButtonVariant = () => {
     switch (variant) {
-      case ButtonVariant.OUTLINE:
+      case ButtonVariant.SECONDARY:
         return classes.secondary
       case ButtonVariant.TEXT:
         return classes.text
