@@ -1,8 +1,7 @@
 'use client'
 import React, { ChangeEvent } from 'react'
-import { Input } from '../Input'
 import { useFormContext } from 'react-hook-form'
-import { InputProps } from '../Input/Input'
+import Input, { InputProps } from '../Input/Input'
 
 interface FieldInputProps  extends Omit<InputProps, "register">  {
   classNames?: {
@@ -13,7 +12,7 @@ interface FieldInputProps  extends Omit<InputProps, "register">  {
   label?: string
   name: string
   type?: string
-  onChange?:(e:ChangeEvent<HTMLInputElement>)=>void
+  onChange?:any
 }
 
 

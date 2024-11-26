@@ -30,7 +30,9 @@ const Header = () => {
         ))
       }
       </div>
-      <Button>Login</Button>
+      <Link href={'/login'} className='flex items-center justify-center'>
+      <Button className='h-fit rounded-full !py-1'>Login</Button>
+      </Link>
    </nav>
   )
 }

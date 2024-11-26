@@ -25,6 +25,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled = false,
   ...props
 }) => {
+
   const renderButtonVariant = () => {
     switch (variant) {
       case ButtonVariant.SECONDARY:
@@ -32,7 +33,7 @@ const Button: React.FC<ButtonProps> = ({
       case ButtonVariant.TEXT:
         return classes.text
       default:
-        return classes.PRIMARY
+        return classes.primary
     }
   }
   return (
@@ -41,7 +42,7 @@ const Button: React.FC<ButtonProps> = ({
         <span className={`{iconClassName}`}>{leftAdornment}</span>
       )}
       <button
-        className={`flex items-center justify-center py-2 px-4 rounded ${
+        className={`flex items-center justify-center py-2  px-4 rounded ${
           disabled ? 'bg-blue-300 cursor-not-allow' : renderButtonVariant()
         } ${className}`}
         {...props}
