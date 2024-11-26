@@ -2,6 +2,7 @@ import { MainLogoIcon } from '@/app/assets'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { Button } from '../Button'
 
 
 const Header = () => {
@@ -29,6 +30,7 @@ const Header = () => {
         ))
       }
       </div>
+      <Button>Login</Button>
    </nav>
   )
 }
