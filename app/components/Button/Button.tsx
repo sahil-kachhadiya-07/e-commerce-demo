@@ -1,5 +1,6 @@
 import React, { ButtonHTMLAttributes, ReactNode } from 'react'
 import classes from "./button.module.css"
+import { Loader2 } from 'lucide-react'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant | string
@@ -8,6 +9,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   rightAdornment?: ReactNode
   className?: string
   iconClassName?: string
+  loading?:boolean
 }
 
 export enum ButtonVariant {
@@ -23,6 +25,7 @@ const Button: React.FC<ButtonProps> = ({
   leftAdornment,
   rightAdornment,
   disabled = false,
+  loading,
   ...props
 }) => {
 
@@ -36,18 +39,19 @@ const Button: React.FC<ButtonProps> = ({
         return classes.primary
     }
   }
+  console.log('disabled', disabled)
   return (
     <>
       {!!leftAdornment && (
         <span className={`{iconClassName}`}>{leftAdornment}</span>
       )}
       <button
-        className={`flex items-center justify-center py-2  px-4 rounded ${
-          disabled ? 'bg-blue-300 cursor-not-allow' : renderButtonVariant()
+        className={`flex items-center focus:outline-none justify-center py-2 gap-2 px-4 rounded ${
+          disabled ? '!cursor-not-allowed' : renderButtonVariant()
         } ${className}`}
         {...props}
       >
-        {children}
+       {loading && <Loader2 className='animate-spin' />}{children} 
       </button>
       {!!rightAdornment && (
         <span className={`{iconClassName}`}>{rightAdornment}</span>
