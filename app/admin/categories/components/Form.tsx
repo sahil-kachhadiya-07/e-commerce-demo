@@ -16,6 +16,29 @@ const Form = () => {
     const handleCreate = async () => {
 
     }
+    // const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    
+    //     if (!image) {
+    //       alert('Please select an image to upload.');
+    //       return;
+    //     }
+    
+    //     const formData = new FormData();
+    //     formData.append('file', image);
+    
+    //     const res = await fetch('/api/upload', {
+    //       method: 'POST',
+    //       body: formData,
+    //     });
+    
+    //     const data = await res.json();
+    //     if (res.ok) {
+    //       setUploadedPath(data.filePath);
+    //     } else {
+    //       alert(data.error || 'Upload failed');
+    //     }
+    //   };
   return (
     <div className='flex flex-col gap-3 bg-white rounded-xl p-5 w-full md:w-[400px]'>
         <h1>
