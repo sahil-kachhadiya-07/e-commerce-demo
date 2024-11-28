@@ -39,7 +39,6 @@ const Button: React.FC<ButtonProps> = ({
         return classes.primary
     }
   }
-  console.log('disabled', disabled)
   return (
     <>
       {!!leftAdornment && (

@@ -6,7 +6,7 @@ import { LogOut } from 'lucide-react'
 import { Button } from '@/app/components/Button'
 import { toast } from 'react-hot-toast'
 import { signOut } from 'firebase/auth'
-import { auth } from '@/lib/auth/firestore/fierbase'
+import { auth } from '@/lib/firestore/fierbase'
 
 interface data {
   name: string

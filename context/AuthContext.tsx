@@ -1,6 +1,6 @@
 'use client'
 
-import { auth } from '@/lib/auth/firestore/fierbase'
+import { auth } from '@/lib/firestore/fierbase'
 import { onAuthStateChanged } from 'firebase/auth'
 import React, {
   ReactNode,

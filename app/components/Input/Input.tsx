@@ -32,7 +32,7 @@ const Input: React.FC<InputProps> = ({
   if (!formContext) {
     return (
       <input
-        className={`border border-solid shadow-sm p-1 w-full rounded focus:outline-none ${classNames?.inputClassName}`}
+        className={`border border-solid shadow-sm p-1 w-full rounded-lg focus:outline-none ${classNames?.inputClassName}`}
         {...props}
       />
     )
@@ -40,12 +40,12 @@ const Input: React.FC<InputProps> = ({
   return (
     <>
       <div
-        className={`flex flex-col gap-2 ${
+        className={`flex flex-col gap-1 ${
           classNames?.InputContainerClassName ?? ''
         }`}
       >
         {!!label && (
-          <label className={`${classNames?.labelClassName}`}>
+          <label className={`text-gray-500 text-sm ${classNames?.labelClassName}`}>
             {label} <span className='required'>{required ? ' *' : ''}</span>
           </label>
         )}
@@ -53,7 +53,7 @@ const Input: React.FC<InputProps> = ({
           <div className='relative'>
             <input
               defaultValue={defaultValue}
-              className={`border border-solid shadow-sm p-1 w-full rounded focus:outline-none ${classNames?.inputClassName}`}
+              className={`border border-solid shadow-sm p-1 w-full rounded-lg focus:outline-none ${classNames?.inputClassName}`}
               type={`${visible === true ? 'text' : 'password'}`}
               {...props}
               {...formContext.register(name, { onChange: onChange })}
@@ -75,7 +75,7 @@ const Input: React.FC<InputProps> = ({
         ) : (
           <input
             defaultValue={defaultValue}
-            className={`border border-solid shadow-sm p-1 w-full rounded focus:outline-none  ${classNames?.inputClassName}`}
+            className={`border border-solid shadow-sm p-1 w-full rounded-lg focus:outline-none  ${classNames?.inputClassName}`}
             type={type}
             {...props}
             {...formContext.register(name, { onChange: onChange })}
