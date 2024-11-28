@@ -1,4 +1,4 @@
-import {Box, Cat, Layers2, LayoutDashboard, LibraryBig, PackageOpen, ShoppingCart, Star, User} from 'lucide-react'
+import {Box, Cat, Layers2, LayoutDashboard, LibraryBig, PackageOpen, ShieldCheck, ShoppingCart, Star, User} from 'lucide-react'
 
 export const sideMenuList = [
     {
@@ -37,5 +37,10 @@ export const sideMenuList = [
         name:"Collections",
         link:"/admin/collections",
         icon:<LibraryBig className='h-5 w-5'/>
+    },
+    {
+        name:"Admins",
+        link:"/admin/admins",
+        icon:<ShieldCheck className='h-5 w-5'/>
     }
 ]
