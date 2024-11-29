@@ -1,0 +1,14 @@
+private routes
+
+1. admin
+layout -> checkingadmin -> adminlayout -> header,sidebar,children 
+
+2.Dashboard
+
+public routes
+auth
+
+auth
+firebase is used for authentication 
+firebase's signup method is used for signup
+signInWithPopup(auth, new GoogleAuthProvider()) used for google sign-in
