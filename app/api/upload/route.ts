@@ -1,54 +1,68 @@
 import { NextResponse } from 'next/server';
-import multer from 'multer';
-import { NextRequest } from 'next/server';
-import { extname, join } from 'path';
+import { createWriteStream } from 'fs';
+import { join } from 'path';
 import { promises as fs } from 'fs';
 
 // Ensure uploads directory exists
 const uploadDir = join(process.cwd(), 'uploads');
-fs.mkdir(uploadDir, { recursive: true }).catch(() => {});
+await fs.mkdir(uploadDir, { recursive: true }).catch(() => {});
 
-// Configure multer
-const storage = multer.diskStorage({
-  destination: uploadDir,
-  filename: (_req, file, cb) => {
-    const uniqueName = `${Date.now()}${extname(file.originalname)}`;
-    cb(null, uniqueName);
-  },
-});
+async function saveFile(file: File, uploadDir: string): Promise<string> {
+  const filePath = join(uploadDir, `${Date.now()}-${file.name}`);
+  const stream = createWriteStream(filePath);
 
-const upload = multer({ storage });
-
-export const POST = async (req: NextRequest) => {
   return new Promise((resolve, reject) => {
-    upload.single('file')(req as any, {} as any, (err: any) => {
-      if (err) {
-        reject(
-          NextResponse.json(
-            { error: 'File upload failed.' },
-            { status: 500 }
-          )
-        );
+    const reader = file.stream().getReader();
+    const decoder = new TextDecoder();
+
+    function processChunk({ done, value }: ReadableStreamReadResult<Uint8Array>) {
+      if (done) {
+        stream.end();
+        resolve(filePath);
         return;
       }
 
-      const file = (req as any).file;
-      if (!file) {
-        resolve(
-          NextResponse.json(
-            { error: 'No file uploaded.' },
-            { status: 400 }
-          )
-        );
-        return;
-      }
+      stream.write(Buffer.from(value), (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        reader.read().then(processChunk);
+      });
+    }
 
-      resolve(
-        NextResponse.json({
-          message: 'File uploaded successfully.',
-          filePath: `/uploads/${file.filename}`, // File path for client use
-        })
-      );
-    });
+    reader.read().then(processChunk);
   });
+}
+
+export const POST = async (nextRequest: Request) => {
+  try {
+    const formData = await nextRequest.formData();
+    const file = formData.get('image') as File;
+
+    if (!file) {
+      return NextResponse.json(
+        { error: 'No file uploaded.' },
+        { status: 400 }
+      );
+    }
+
+    const savedFilePath = await saveFile(file, uploadDir);
+    return NextResponse.json({
+      message: 'File uploaded successfully.',
+      filePath: savedFilePath,
+    });
+  } catch (error: any) {
+    console.error('Server error:', error);
+    return NextResponse.json(
+      { error: 'Internal Server Error', details: error.message },
+      { status: 500 }
+    );
+  }
 };
+
+export const config = {
+  runtime: 'nodejs',
+};
+
+

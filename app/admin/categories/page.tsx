@@ -1,3 +1,4 @@
+'use Client'
 import React from 'react'
 import Form from './components/Form'
 import ListView from './components/ListView'

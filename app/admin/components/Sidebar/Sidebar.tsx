@@ -1,3 +1,4 @@
+'use client'
 import { MainLogoIcon } from '@/app/assets'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -34,7 +35,7 @@ const Sidebar: React.FC<SideBarProps> = ({ data }) => {
   return (
     <section className='bg-white gap-10 flex flex-col  px-5 py-3 border-r h-screen overflow-hidden !w-[260px]'>
       <div className='flex justify-center'>
-        <MainLogoIcon className='!w-[200px]' />
+        {/* <MainLogoIcon className='!w-[200px]' /> */}
       </div>
       {/* h-full overflow-y-auto used for scroll only menu */}
       <div className='flex-1 flex h-full overflow-y-auto flex-col gap-4'>

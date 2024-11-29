@@ -107,7 +107,7 @@ const SignInWithGoogle = () => {
         onClick={handleLogin}
         className='w-full !bg-gray-300 !text-black !text-[14px] rounded-lg'
       >
-        <GoogleLogo className="h-4 w-4"/> Sign In With Goggle
+        {/* <GoogleLogo className="h-4 w-4"/> Sign In With Goggle */}
       </Button>
     </>
   )
