@@ -1,66 +1,66 @@
-import { NextResponse } from 'next/server'
-import { createWriteStream } from 'fs'
-import { join } from 'path'
-import { promises as fs } from 'fs'
+import { NextResponse } from 'next/server';
+import { v2 as cloudinary } from 'cloudinary';
+import { Readable } from 'stream';
 
-// Ensure uploads directory exists
-const uploadDir = join(process.cwd(), 'uploads')
-await fs.mkdir(uploadDir, { recursive: true }).catch(() => {})
+// Configure Cloudinary with your credentials
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-async function saveFile (file: File, uploadDir: string): Promise<string> {
-  const filePath = join(uploadDir, `${Date.now()}-${file.name}`)
-  const stream = createWriteStream(filePath)
-
-  return new Promise((resolve, reject) => {
-    const reader = file.stream().getReader()
-    const decoder = new TextDecoder()
-
-    function processChunk ({
-      done,
-      value
-    }: ReadableStreamReadResult<Uint8Array>) {
-      if (done) {
-        stream.end()
-        resolve(filePath)
-        return
-      }
-
-      stream.write(Buffer.from(value), err => {
-        if (err) {
-          reject(err)
-          return
-        }
-        reader.read().then(processChunk)
-      })
-    }
-
-    reader.read().then(processChunk)
-  })
+function bufferToStream(buffer) {
+  return new Readable({
+    read() {
+      this.push(buffer);
+      this.push(null);
+    },
+  });
 }
 
-export const POST = async (nextRequest: Request) => {
-  try {
-    const formData = await nextRequest.formData()
-    const file = formData.get('image') as File
+async function uploadToCloudinary(fileBuffer) {
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { folder: 'uploads' }, // Optional folder name
+      (error, result) => {
+        if (error) {
+          reject(new Error(`Cloudinary upload failed: ${error.message}`));
+        } else {
+          resolve(result.secure_url);
+        }
+      }
+    );
 
-    if (!file) {
-      return NextResponse.json({ error: 'No file uploaded.' }, { status: 400 })
+    bufferToStream(fileBuffer).pipe(uploadStream);
+  });
+}
+
+export const POST = async (nextRequest) => {
+  try {
+    const formData = await nextRequest.formData();
+    const file = formData.get('image');
+
+    if (!file || !(file instanceof Blob)) {
+      return NextResponse.json({ error: 'No file uploaded or invalid file type.' }, { status: 400 });
     }
 
-    const savedFilePath = await saveFile(file, uploadDir)
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    const uploadedUrl = await uploadToCloudinary(buffer);
     return NextResponse.json({
       message: 'File uploaded successfully.',
-      filePath: savedFilePath
-    })
-  } catch (error: any) {
-    console.error('Server error:', error)
+      fileUrl: uploadedUrl,
+    });
+  } catch (error) {
+    console.error('Server error:', error);
     return NextResponse.json(
       { error: 'Internal Server Error', details: error.message },
       { status: 500 }
-    )
+    );
   }
-}
+};
 
 export const config = {
-  runtime: 'nodejs'
-}
+  runtime: 'nodejs',
+};

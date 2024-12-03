@@ -28,13 +28,26 @@ const Input: React.FC<InputProps> = ({
 }) => {
   const [visible, setVisible] = useState(false)
   const formContext = useFormContext()
-
   if (!formContext) {
     return (
-      <input
-        className={`border border-solid shadow-sm p-1 w-full rounded-lg focus:outline-none ${classNames?.inputClassName}`}
-        {...props}
-      />
+      <div
+        className={`flex flex-col gap-1 ${
+          classNames?.InputContainerClassName ?? ''
+        }`}
+      >
+        {!!label && (
+          <label
+            className={`text-gray-500 text-sm ${classNames?.labelClassName}`}
+          >
+            {label} <span className='required'>{required ? ' *' : ''}</span>
+          </label>
+        )}
+        <input
+          className={`border border-solid shadow-sm p-1 w-full rounded-lg focus:outline-none ${classNames?.inputClassName}`}
+          {...props}
+          type={type}
+        />
+      </div>
     )
   }
   return (
@@ -45,7 +58,9 @@ const Input: React.FC<InputProps> = ({
         }`}
       >
         {!!label && (
-          <label className={`text-gray-500 text-sm ${classNames?.labelClassName}`}>
+          <label
+            className={`text-gray-500 text-sm ${classNames?.labelClassName}`}
+          >
             {label} <span className='required'>{required ? ' *' : ''}</span>
           </label>
         )}
