@@ -1,4 +1,4 @@
-import { Timestamp, collection, doc, setDoc } from 'firebase/firestore';
+import { Timestamp, collection, deleteDoc, doc, setDoc } from 'firebase/firestore';
 import React from 'react'
 import { db } from '../fierbase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
@@ -36,3 +36,11 @@ export const createNewCategory = async ({data ,imageURL}) => {
   }
 }
 
+
+export const deleteCategory = async ({id}) => {
+ if(!id)
+ {
+   throw new Error("ID is require")
+ }
+ await deleteDoc(doc(db,`categories/${id}`))
+}

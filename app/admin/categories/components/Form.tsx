@@ -2,7 +2,6 @@
 
 import { Button } from '@/app/components/Button'
 import { FieldInput } from '@/app/components/FieldInput'
-import { Input } from '@/app/components/Input'
 import { createNewCategory } from '@/lib/firestore/categories/write'
 import axios from 'axios'
 import React, { useState } from 'react'
@@ -14,13 +13,7 @@ const Form = () => {
   const [image, setImage] = useState<any>()
   const [isLoading, setIsLoading] = useState(false)
   const methods = useForm()
-  const handleForm = (data) => {
-    setData(data)
-    handleCreate()
-  }
-  const handleCreate = async () => {
-  console.log('data', data)
-
+  const handleForm = async (data) => {
     setIsLoading(true)
     const formData = new FormData()
     formData.append('image', image) // 'image' must match the field name in the backend
@@ -39,6 +32,7 @@ const Form = () => {
     }
     setIsLoading(false)
   }
+
   return (
     <div className='flex flex-col gap-3 bg-white rounded-xl p-5 w-full md:w-[400px]'>
       <h1>Create Category</h1>
