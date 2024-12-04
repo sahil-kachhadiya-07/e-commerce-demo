@@ -25,7 +25,7 @@ const Form = () => {
       })
       await createNewCategory({ data: data, imageURL: response.data.fileUrl })
       toast.success('Successfully Created')
-      setData(null)
+      methods.reset(); 
       setImage(null)
     } catch (error) {
       toast.error(error.response?.data || error.message)
