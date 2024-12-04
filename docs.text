@@ -1,0 +1,23 @@
+private routes
+
+1. admin
+layout -> checkingadmin -> adminlayout -> header,sidebar,children 
+
+2.Dashboard
+
+public routes
+auth
+
+auth
+firebase is used for authentication 
+firebase's signup method is used for signup
+signInWithPopup(auth, new GoogleAuthProvider()) used for google sign-in
+
+image
+cloudinary is used to store image and get image url and store this image url into database
+
+swr package
+it is used for data fetching
+Fast, lightweight and reusable data fetching
+Built-in cache and request deduplication
+
