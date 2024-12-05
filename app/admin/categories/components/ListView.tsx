@@ -4,6 +4,7 @@ import { useCategories } from '@/lib/firestore/categories/read'
 import { deleteCategory } from '@/lib/firestore/categories/write'
 import axios from 'axios'
 import { Delete, Edit2, Loader2, Trash2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 // import { CircularProgress } from '@nextui-org/react';
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -53,9 +54,16 @@ const ListView = () => {
   )
 }
 
+
 const Row = ({ index, item }) => {
   const [isDeleting, setIsDeleting] = useState(false)
+  const router = useRouter()
   console.log('item.imageURL', item.imageURL)
+
+  const handleUpdate = async () => {
+    router.push(`/admin/categories?id=${item?.id}`)
+  }
+
   const handleDelete = async () => {
     if (!confirm('Are you sure')) return
     setIsDeleting(true)
@@ -66,7 +74,7 @@ const Row = ({ index, item }) => {
           imageUrl: item.imageURL // Pass the image URL as a query parameter
         }
       })
-      console.log('Image deletion successful:', response.data)
+      console.log('Image deletion successfull:', response.data)
 
       // this api is used to delete data from databse
       await deleteCategory({ id: item?.id })
@@ -93,7 +101,7 @@ const Row = ({ index, item }) => {
       <td className='border-y bg-white px-3 py-3'>{item?.name}</td>
       <td className='border-y bg-white px-3 py-3 border-r rounded-r-lg'>
         <div className='flex items-center flex-row gap-2'>
-          <Button className='!bg-gray-400 !px-2'>
+          <Button className='!bg-gray-400 !px-2' onClick={handleUpdate}>
             <Edit2 size={13} />
           </Button>
           <Button

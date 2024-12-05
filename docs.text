@@ -17,7 +17,12 @@ image
 cloudinary is used to store image and get image url and store this image url into database
 
 swr package
-it is used for data fetching
+it is used for realtime data fetching
 Fast, lightweight and reusable data fetching
 Built-in cache and request deduplication
+
+firebase crud
+getDoc 
+setDoc
+deleteDoc
 
