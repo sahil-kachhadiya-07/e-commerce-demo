@@ -46,7 +46,7 @@ export const deleteCategory = async ({id}) => {
  await deleteDoc(doc(db,`categories/${id}`))
 }
 
-export const UpdateCategory = async ({data,updatedData,image}) => {
+export const UpdateCategory = async ({data,updatedData,imageURL}) => {
   if(!data?.name)
   {
     throw new Error("name is Required");
@@ -61,14 +61,10 @@ export const UpdateCategory = async ({data,updatedData,image}) => {
     }
   
     const id = data?.id
-    let imageURL = data?.imageURL
-    if(image)
-    {
-      imageURL=image
-    }
   try {
     await updateDoc(doc(db, `categories/${id}`), { 
-      ...updatedData,
+      name:updatedData?.name,
+      slug:updatedData?.slug,
       imageURL:imageURL,
       timeStampCreate: Timestamp.now()
     });

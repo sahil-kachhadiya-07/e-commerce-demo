@@ -35,3 +35,21 @@ export const UseImageDelete = async ({imageURL}) => {
       )
     }
   }
+
+  export const useImageReplace = async (image , imageURL) => {
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("imageURL", imageURL);
+    try {
+      const response = await axios.post("/api/replace-image", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("Image Replace successfully");
+      return response.data;
+    } catch (error) {
+      console.log("Error in image Replace:", error.message);
+      return { error: true, message: error.message }; 
+    }
+  };
