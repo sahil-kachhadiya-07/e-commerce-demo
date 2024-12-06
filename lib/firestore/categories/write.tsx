@@ -61,11 +61,17 @@ export const UpdateCategory = async ({data,updatedData,imageURL}) => {
     }
   
     const id = data?.id
+    let image = data?.imageURL
+  if(imageURL)
+  {
+    image = imageURL
+  }
+
   try {
     await updateDoc(doc(db, `categories/${id}`), { 
       name:updatedData?.name,
       slug:updatedData?.slug,
-      imageURL:imageURL,
+      imageURL:image,
       timeStampCreate: Timestamp.now()
     });
   } catch (error) {

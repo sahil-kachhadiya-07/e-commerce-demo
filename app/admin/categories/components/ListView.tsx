@@ -23,7 +23,7 @@ const ListView = () => {
     return <div>{error}</div>
   }
   return (
-    <div className='rounded-xl flex-1 flex flex-col gap-3 gap px-5'>
+    <div className='rounded-xl flex-1 flex flex-col gap-3 gap md:pr-5 md:px-0 px-0'>
       <h1 className='text-xl'>Categories</h1>
       <table className='border-separate  border-spacing-y-3'>
         <thead>
