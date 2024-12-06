@@ -1,5 +1,6 @@
 'use client'
 import { Button } from '@/app/components/Button'
+import { UseImageDelete } from '@/app/services/cloudinary'
 import { useCategories } from '@/lib/firestore/categories/read'
 import { deleteCategory } from '@/lib/firestore/categories/write'
 import axios from 'axios'
@@ -69,12 +70,13 @@ const Row = ({ index, item }) => {
     setIsDeleting(true)
     try {
       //this api is for delete image from cloud
-      const response = await axios.delete('/api/delete-image', {
-        params: {
-          imageUrl: item.imageURL // Pass the image URL as a query parameter
-        }
-      })
-      console.log('Image deletion successfull:', response.data)
+      // const response = await axios.delete('/api/delete-image', {
+      //   params: {
+      //     imageUrl: item.imageURL // Pass the image URL as a query parameter
+      //   }
+      // })
+      const response = await UseImageDelete(item.imageURL)
+      console.log('Image deletion successfull:', response)
 
       // this api is used to delete data from databse
       await deleteCategory({ id: item?.id })

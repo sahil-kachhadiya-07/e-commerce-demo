@@ -18,10 +18,10 @@ function bufferToStream(buffer) {
   });
 }
 
-async function uploadToCloudinary(fileBuffer) {
+async function uploadToCloudinary(fileBuffer , foldername) {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
-      { folder: 'uploads' }, // Optional folder name
+      { folder: foldername }, // Optional folder name
       (error, result) => {
         if (error) {
           reject(new Error(`Cloudinary upload failed: ${error.message}`));
@@ -39,6 +39,7 @@ export const POST = async (nextRequest) => {
   try {
     const formData = await nextRequest.formData();
     const file = formData.get('image');
+    const foldername = formData.get('foldername');
     console.log('file', file)
 
     if (!file || !(file instanceof Blob)) {
@@ -48,7 +49,7 @@ export const POST = async (nextRequest) => {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const uploadedUrl = await uploadToCloudinary(buffer);
+    const uploadedUrl = await uploadToCloudinary(buffer , foldername);
     return NextResponse.json({
       message: 'File uploaded successfully.',
       fileUrl: uploadedUrl,

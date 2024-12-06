@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-export const useImageUpload = async ({ image }) => {
-    console.log('image%%%%', image)
+export const useImageUpload = async (image,foldername) => {
     const formData = new FormData();
     formData.append("image", image);
+    formData.append("foldername", foldername);
     try {
       const response = await axios.post("/api/upload", formData, {
         headers: {
@@ -18,8 +18,7 @@ export const useImageUpload = async ({ image }) => {
     }
   };
   
-export const UseImageDelete = async ({imageURL}) => {
-    console.log('imageURL(((', imageURL)
+export const UseImageDelete = async (imageURL) => {
     try {
       //this api is for delete image from cloud
       const response = await axios.delete('/api/delete-image', {

@@ -2,7 +2,7 @@
 
 import { Button } from "@/app/components/Button";
 import { FieldInput } from "@/app/components/FieldInput";
-import { useImageReplace, useImageUpload } from "@/app/utils/cloudinaryCrud";
+import { useImageReplace, useImageUpload } from "@/app/services/cloudinary";
 import { getCategory } from "@/lib/firestore/categories/read_server";
 import { UpdateCategory, createNewCategory } from "@/lib/firestore/categories/write";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -26,7 +26,7 @@ const Form = () => {
       alert("upload image")
     }
     try {
-      const response =  await useImageUpload({image});
+      const response =  await useImageUpload(image , "categories");
       await createNewCategory({ data: data, imageURL: response?.fileUrl });
       toast.success("Successfully Created");
       methods.reset({
