@@ -1,18 +1,17 @@
 'use client'
 import { Button } from '@/app/components/Button'
 import { UseImageDelete } from '@/app/services/cloudinary'
-import { useCategories } from '@/lib/firestore/categories/read'
-import { deleteCategory } from '@/lib/firestore/categories/write'
-import axios from 'axios'
-import { Delete, Edit2, Loader2, Trash2 } from 'lucide-react'
+import { useAdmins } from '@/lib/firestore/admins/read'
+import { deleteAdmin } from '@/lib/firestore/admins/write'
+import { deleteBrand } from '@/lib/firestore/brands/write'
+import { Edit2, Loader2, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-// import { CircularProgress } from '@nextui-org/react';
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 const ListView = () => {
-  const { data: categories, error, isLoading } = useCategories()
-  console.log('data', categories)
+  const { data: admins, error, isLoading } = useAdmins()
+  console.log('data', admins)
   if (isLoading) {
     return (
       <div>
@@ -25,7 +24,7 @@ const ListView = () => {
   }
   return (
     <div className='rounded-xl flex-1 flex flex-col gap-3 gap md:pr-5 md:px-0 px-0'>
-      <h1 className='text-xl'>Categories</h1>
+      <h1 className='text-xl'>Brands</h1>
       <table className='border-separate  border-spacing-y-3'>
         <thead>
           <tr>
@@ -42,7 +41,7 @@ const ListView = () => {
           </tr>
         </thead>
         <tbody>
-          {categories?.map((item, index) => {
+          {admins?.map((item, index) => {
             return (
               <React.Fragment key={index}>
                 <Row index={index} item={item} />
@@ -55,14 +54,13 @@ const ListView = () => {
   )
 }
 
-
 const Row = ({ index, item }) => {
   const [isDeleting, setIsDeleting] = useState(false)
   const router = useRouter()
   console.log('item.imageURL', item.imageURL)
 
   const handleUpdate = async () => {
-    router.push(`/admin/categories?id=${item?.id}`)
+    router.push(`/admin/admins?id=${item?.id}`)
   }
 
   const handleDelete = async () => {
@@ -79,7 +77,8 @@ const Row = ({ index, item }) => {
       console.log('Image deletion successfull:', response)
 
       // this api is used to delete data from databse
-      await deleteCategory({ id: item?.id })
+      await deleteAdmin({ id: item?.id })
+      router.push('/admin/admins')
       toast.success('Successfully Deleted')
     } catch (error) {
       console.log(
@@ -100,7 +99,12 @@ const Row = ({ index, item }) => {
           <img className='h-10 w-10' src={item?.imageURL} />
         </div>
       </td>
-      <td className='border-y bg-white px-3 py-3'>{item?.name}</td>
+      <td className='border-y bg-white px-3 py-3'>
+        <div className='flex flex-col'>
+          <h1>{item?.name}</h1>
+          <h3 className='text-sm text-gray-600'>{item.email}</h3>
+        </div>
+      </td>
       <td className='border-y bg-white px-3 py-3 border-r rounded-r-lg'>
         <div className='flex items-center justify-center flex-row gap-2'>
           <Button className='!bg-gray-400 !px-2' onClick={handleUpdate}>

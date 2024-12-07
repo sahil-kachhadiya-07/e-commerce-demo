@@ -1,7 +1,7 @@
 import { Timestamp, collection, deleteDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../fierbase';
 
-export const createNewCategory = async ({data ,imageURL}) => {
+export const createNewAdmin = async ({data ,imageURL}) => {
   if(!imageURL){
     throw new Error("image is Required");
   }
@@ -9,21 +9,21 @@ export const createNewCategory = async ({data ,imageURL}) => {
   {
     throw new Error("name is Required");
   }
-  if(!data?.slug)
+  if(!data?.email)
   {
-    throw new Error("slug is Required");
+    throw new Error("email is Required");
   }
 
   //this logic is used to generate random id
-  const newId = doc(collection(db,'ids')).id
+  const newId = data?.email
 
-  // const imageRef = ref(storage,`categories/${newId}`);
+  // const imageRef = ref(storage,`admins/${newId}`);
   // await uploadBytes(imageRef , image);
   // const imageUrl = await getDownloadURL(imageRef)
 
 
   try {
-    await setDoc(doc(db, `categories/${newId}`), { 
+    await setDoc(doc(db, `admins/${newId}`), { 
       ...data,
       id: newId,
       imageURL:imageURL,
@@ -36,22 +36,22 @@ export const createNewCategory = async ({data ,imageURL}) => {
 
 
 //for delete operation
-export const deleteCategory = async ({id}) => {
+export const deleteAdmin = async ({id}) => {
  if(!id)
  {
    throw new Error("ID is require")
  }
- await deleteDoc(doc(db,`categories/${id}`))
+ await deleteDoc(doc(db,`admins/${id}`))
 }
 
-export const UpdateCategory = async ({data,updatedData,imageURL}) => {
+export const UpdateAdmin = async ({data,updatedData,imageURL}) => {
   if(!data?.name)
   {
     throw new Error("name is Required");
   }
-  if(!data?.slug)
+  if(!data?.email)
   {
-    throw new Error("slug is Required");
+    throw new Error("email is Required");
   }
   if(!data?.id)
     {
@@ -66,12 +66,24 @@ export const UpdateCategory = async ({data,updatedData,imageURL}) => {
   }
 
   try {
-    await updateDoc(doc(db, `categories/${id}`), { 
+    if(id===data?.email){
+    await updateDoc(doc(db, `admins/${id}`), { 
       name:updatedData?.name,
-      slug:updatedData?.slug,
+      email:updatedData?.email,
       imageURL:image,
       timeStampCreate: Timestamp.now()
-    });
+    });}
+    else{
+      const newId = data?.email
+
+      await deleteDoc(doc(db, `admins/${id}`))
+      await setDoc(doc(db, `admins/${newId}`), { 
+        ...data,
+        id:newId,
+        imageURL:image,
+        timeStampCreate: Timestamp.now()
+      });
+    }
   } catch (error) {
     console.error("Error writing document: ", error);
   }
