@@ -96,13 +96,13 @@ const Row = ({ index, item }) => {
       </td>
       <td className='border-y bg-white px-3 py-3'>
         <div className='flex justify-center'>
-          <img className='h-10 w-10' src={item?.imageURL} />
+          <img className='h-10 w-10 rounded-lg' src={item?.imageURL} />
         </div>
       </td>
       <td className='border-y bg-white px-3 py-3'>
         <div className='flex flex-col'>
           <h1>{item?.name}</h1>
-          <h3 className='text-sm text-gray-600'>{item.email}</h3>
+          <h3 className='text-xs text-gray-500'>{item.email}</h3>
         </div>
       </td>
       <td className='border-y bg-white px-3 py-3 border-r rounded-r-lg'>
