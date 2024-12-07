@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
 import { Readable } from 'stream';
+import { getPublicIdFromUrl } from '../delete-image/route';
 
 // Configure Cloudinary with your credentials
 cloudinary.config({
@@ -18,10 +19,10 @@ function bufferToStream(buffer) {
   });
 }
 
-async function uploadToCloudinary(fileBuffer , foldername) {
+async function uploadToCloudinary(fileBuffer , publicId) {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
-      { folder: foldername }, // Optional folder name
+      { public_id: publicId, overwrite: true },
       (error, result) => {
         if (error) {
           reject(new Error(`Cloudinary upload failed: ${error.message}`));
@@ -34,14 +35,14 @@ async function uploadToCloudinary(fileBuffer , foldername) {
     bufferToStream(fileBuffer).pipe(uploadStream);
   });
 }
-
+ 
 export const POST = async (nextRequest) => {
   try {
     const formData = await nextRequest.formData();
     const file = formData.get('image');
-    const foldername = formData.get('foldername');
+    const imageURL = formData.get('imageURL')
     console.log('file', file)
-
+    const publicId = getPublicIdFromUrl(imageURL)
     if (!file || !(file instanceof Blob)) {
       return NextResponse.json({ error: 'No file uploaded or invalid file type.' }, { status: 400 });
     }
@@ -49,7 +50,7 @@ export const POST = async (nextRequest) => {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const uploadedUrl = await uploadToCloudinary(buffer , foldername);
+    const uploadedUrl = await uploadToCloudinary(buffer,publicId);
     return NextResponse.json({
       message: 'File uploaded successfully.',
       fileUrl: uploadedUrl,

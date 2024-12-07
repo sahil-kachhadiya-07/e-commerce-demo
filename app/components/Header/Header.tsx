@@ -1,3 +1,4 @@
+'use client'
 import { MainLogoIcon } from '@/app/assets'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -20,7 +21,7 @@ const Header = () => {
     ]
   return (
    <nav className='w-full py-4 px-8 border-solid border-b-[1px] flex justify-between'>
-        {/* <MainLogoIcon className="p-3"/> */}
+        <MainLogoIcon className="p-3"/>
       <div className='flex flex-row gap-4 items-center font-semibold'>
       {
         menuList.map((item,index)=>(
