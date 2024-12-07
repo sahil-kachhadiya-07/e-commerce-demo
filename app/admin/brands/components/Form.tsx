@@ -2,15 +2,15 @@
 
 import { Button } from "@/app/components/Button";
 import { FieldInput } from "@/app/components/FieldInput";
-import { categorySchema } from "@/app/schema/admin";
 import { useImageReplace, useImageUpload } from "@/app/services/cloudinary";
-import { getCategory } from "@/lib/firestore/categories/read_server";
-import { UpdateCategory, createNewCategory } from "@/lib/firestore/categories/write";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { getBrands } from "@/lib/firestore/brands/read_server";
+import { UpdateBrand, createNewBrand } from "@/lib/firestore/brands/write";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { brandSchema } from "@/app/schema/admin";
 
 const Form = () => {
   const [prevData, setPrevData] = useState<any>();
@@ -20,7 +20,7 @@ const Form = () => {
   const router = useRouter()
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  const methods = useForm({resolver: zodResolver(categorySchema), defaultValues: { name: "", slug: "" } });
+  const methods = useForm({resolver: zodResolver(brandSchema) , defaultValues: { name: ""} });
   
   const handleCreate = async (data) => {
     setIsLoading(true);
@@ -28,12 +28,11 @@ const Form = () => {
       alert("upload image")
     }
     try {
-      const response =  await useImageUpload(image , "categories");
-      await createNewCategory({ data: data, imageURL: response?.fileUrl });
+      const response =  await useImageUpload(image , "brands");
+      await createNewBrand({ data: data, imageURL: response?.fileUrl });
       toast.success("Successfully Created");
       methods.reset({
         name:"",
-        slug:"",
       });
       setImage(null);
       if (fileInputRef.current) {
@@ -48,24 +47,23 @@ const Form = () => {
   const handleUpdate = async (updatedData) => {
     if(!prevData.id)
     {
-      router.push('/admin/categories')
+      router.push('/admin/brands')
       toast.error("Data Not Found")
       return
     }
     setIsLoading(true);
     try {
       const responseImage = await useImageReplace(image , prevData?.imageURL)
-      const response = await UpdateCategory({data:prevData,updatedData:updatedData,imageURL:responseImage.fileUrl});
+      const response = await UpdateBrand({data:prevData,updatedData:updatedData,imageURL:responseImage.fileUrl});
       toast.success("Successfully Updated");
       methods.reset({
         name:"",
-        slug:"",
       });
       setImage(null);
       if (fileInputRef.current) {
         fileInputRef.current.value = '';  // Clear the input field
       }
-        router.push('/admin/categories')
+        router.push('/admin/brands')
     } catch (error) {
       toast.error(error.response?.data || error.message);
     }
@@ -74,16 +72,15 @@ const Form = () => {
   
   const fetchData = async () => {
     try {
-      const res = await getCategory({ id: id });
+      const res = await getBrands({ id: id });
       if (!res) {
         toast.error("Category Not Found");
-        router.push('/admin/categories')
+        router.push('/admin/brands')
       } else {
         setPrevData(res);
         setImage(res.imageURL); 
         methods.reset({
           name: res.name || "",
-          slug: res.slug || "",
         });
       }
     } catch (error) {
@@ -99,7 +96,7 @@ const Form = () => {
 
   return (
     <div className="flex flex-col gap-3 bg-white rounded-xl p-5 w-full md:w-[400px]">
-      <h1>{id ? "Update" : "Create"} Category</h1>
+      <h1>{id ? "Update" : "Create"} Brand</h1>
       <FormProvider {...methods}>
         <form 
           onSubmit={methods.handleSubmit(id ? handleUpdate : handleCreate)}
@@ -137,12 +134,6 @@ const Form = () => {
             label="Name"
             required
             name="name"
-          />
-          <FieldInput
-            placeholder="Enter Slug"
-            label="Slug"
-            required
-            name="slug"
           />
           <Button
             loading={isLoading}
