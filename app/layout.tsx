@@ -28,6 +28,8 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        data-new-gr-c-s-check-loaded="14.1211.0"
+         data-gr-ext-installed=""
       >
         {children}
         <Toaster />
