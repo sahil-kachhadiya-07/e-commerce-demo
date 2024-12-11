@@ -8,18 +8,20 @@ const Description = ({ data, handleData }) => {
 
   return (
     <Editor
-      apiKey='o9byh6ur6wuvlo0n2vzajrv59h7nk26k9kqxd1h1h1mqxd5e'
-       id="tiny-react_66992478021733655599592"
-      value={data?.description || ''}
-      init={{
-        // height: 300,
-        menubar: false,
-        plugins: 'link image code',
-        toolbar:
-          'undo redo | formatselect | bold italic | alignleft aligncenter alignright | code',
-      }}
-      onEditorChange={handleChange}
-    />
+    apiKey="o9byh6ur6wuvlo0n2vzajrv59h7nk26k9kqxd1h1h1mqxd5e"
+    id="tiny-react_66992478021733655599592"
+    value={data?.description || ''}
+    init={{
+      height: 300,
+      menubar: false, // Disable the menubar for simplicity
+      toolbar:
+        'undo redo | formatselect | bold italic underline strikethrough | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat',
+      plugins: 'lists', 
+      content_style: 'body { font-family: Arial, sans-serif; font-size: 14px; }',
+    }}
+    onEditorChange={handleChange}
+  />
+  
   );
 };
 
