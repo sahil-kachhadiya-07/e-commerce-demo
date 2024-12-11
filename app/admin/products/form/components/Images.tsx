@@ -5,7 +5,7 @@ const Images = ({setFeatureImage , featureImage , setImageList , imageList}) => 
     <section className='flex flex-1 flex-col bg-white border p-4 rounded-xl'>
       <h1 className='font-semibold'>Feature Image</h1>
       <div className="flex flex-col gap-1">
-            <label className="text-gray-500 text-sm">Image*</label>
+            <label className="text-gray-500 text-sm">Image <span className='text-red-500'>*</span></label>
             {featureImage && (
               <div className="flex justify-center items-center p-3">
                  {/* URL.createObjectURL used to convert file into url */}

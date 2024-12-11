@@ -103,7 +103,7 @@ const Form = () => {
           className="flex flex-col gap-3"
         >
           <div className="flex flex-col gap-1">
-            <label className="text-gray-500 text-sm">Image*</label>
+            <label className="text-gray-500 text-sm">Image <span className='text-red-500'>*</span></label>
              {image && (
               <div className="flex justify-center items-center p-3">
                  {/* URL.createObjectURL used to convert file into url */}

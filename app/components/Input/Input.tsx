@@ -39,7 +39,7 @@ const Input: React.FC<InputProps> = ({
           <label
             className={`text-gray-500 text-sm ${classNames?.labelClassName}`}
           >
-            {label} <span className='required'>{required ? ' *' : ''}</span>
+            {label} <span className='text-red-500'>{required ? ' *' : ''}</span>
           </label>
         )}
         <input
@@ -61,7 +61,7 @@ const Input: React.FC<InputProps> = ({
           <label
             className={`text-gray-500 text-sm ${classNames?.labelClassName}`}
           >
-            {label} <span className='required'>{required ? ' *' : ''}</span>
+            {label} <span className='text-red-500'>{required ? ' *' : ''}</span>
           </label>
         )}
         {type === 'password' ? (
