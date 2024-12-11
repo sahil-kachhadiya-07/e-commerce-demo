@@ -48,7 +48,7 @@ const FieldSelect: React.FC<FieldSelectProps> = ({
               label={label}
               classNames={classNames}
               required={required}
-              defaultValue={defaultValue}
+              // defaultValue={defaultValue}
               firstChild={firstChild}
               {...props}
             />

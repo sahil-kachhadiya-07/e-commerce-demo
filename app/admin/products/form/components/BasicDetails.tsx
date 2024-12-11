@@ -12,9 +12,8 @@ const BasicDetails = ({handleData}) => {
     const {data:brands} = useBrands()
     const {data:categories} = useCategories()
 
-    const Brands = brands.map((item)=>({label:item.name , value:item.id}))
-    const Categories = categories.map((item)=>({label:item.name , value:item.id}))
-    console.log("&&&&&&&&&&&",Brands,Categories)
+    const Brands = brands?.map((item)=>({label:item.name , value:item.id}))
+    const Categories = categories?.map((item)=>({label:item.name , value:item.id}))
     const methods = useForm()
   return (
     <section className='bg-white flex-1 flex flex-col gap-3 rounded-xl p-4 border'>
