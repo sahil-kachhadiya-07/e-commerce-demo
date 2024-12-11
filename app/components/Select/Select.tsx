@@ -51,14 +51,14 @@ const Select: React.FC<SelectProps> = ({
         id={name}
         // defaultValue={defaultValue}
         {...field} // Spread the `field` for React Hook Form integration
-        className={`border border-solid shadow-sm p-1 w-full rounded-lg focus:outline-none ${
+        className={`border border-solid shadow-sm bg-white p-1 w-full rounded-lg focus:outline-none ${
           classNames?.selectClassName ?? ""
         }`}
         {...props}
       >
-        <option value="">{firstChild}</option>
+        <option value="" className="bg-white">{firstChild}</option>
         {options?.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option key={option.value} value={option.value} className="bg-white">
             {option.label}
           </option>
         ))}
