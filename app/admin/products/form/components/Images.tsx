@@ -2,7 +2,7 @@ import React from 'react'
 
 const Images = ({setFeatureImage , featureImage , setImageList , imageList}) => {
   return (
-    <section className='flex flex-1 flex-col bg-white border p-4 rounded-xl'>
+    <section className='flex flex-col bg-white border p-4 rounded-xl'>
       <h1 className='font-semibold'>Feature Image</h1>
       <div className="flex flex-col gap-1">
             <label className="text-gray-500 text-sm">Image <span className='text-red-500'>*</span></label>

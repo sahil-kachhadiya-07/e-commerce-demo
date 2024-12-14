@@ -44,7 +44,7 @@ const FieldSelect: React.FC<FieldSelectProps> = ({
             <Select
               name={name}
               field={field}
-              options={options}
+              options={options || []}
               label={label}
               classNames={classNames}
               required={required}

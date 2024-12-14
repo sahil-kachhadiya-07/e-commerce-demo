@@ -56,9 +56,9 @@ const Select: React.FC<SelectProps> = ({
         }`}
         {...props}
       >
-        <option value="" className="bg-white">{firstChild}</option>
-        {options?.map((option) => (
-          <option key={option.value} value={option.value} className="bg-white">
+        <option value="">{firstChild}</option>
+        {(options || [])?.map ((option) => (
+          <option key={option.value} value={option.value}>
             {option.label}
           </option>
         ))}

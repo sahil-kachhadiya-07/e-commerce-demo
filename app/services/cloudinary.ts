@@ -52,3 +52,31 @@ export const UseImageDelete = async (imageURL) => {
       return { error: true, message: error.message }; 
     }
   };
+
+
+  export const useMultipleImageUpload = async (imageList , foldername) => {
+    if (!imageList) return alert('Please select files.');
+
+    const formData = new FormData();
+    Array.from(imageList).forEach((file : any) => {
+      formData.append('images', file);
+    });
+    formData.append('foldername', foldername);
+
+    try {
+      const response = await axios.post('/api/multiple-uploads', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200) {
+        console.log("Images uploaded successfully");
+      return response.data;
+      } else {
+        console.log(response.data.error || 'Upload failed.');
+      }
+    } catch (error) {
+      console.error('Error uploading files:', error);
+    }
+  };

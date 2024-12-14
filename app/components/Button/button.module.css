@@ -2,6 +2,10 @@
     @apply bg-primary text-white active:bg-blue-300 active:shadow-lg
 }
 
+.form{
+  @apply  bg-gray-300 py-1 rounded-lg text-black active:shadow-lg 
+}
+
 .secondary{
     @apply !bg-white !text-primary active:!bg-primary active:!text-white border-solid border-[1px] !border-primary
 }
