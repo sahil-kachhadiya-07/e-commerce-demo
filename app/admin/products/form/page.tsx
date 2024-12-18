@@ -6,6 +6,11 @@ import Description from './components/Description'
 import { Button } from '@/app/components/Button'
 import { FormProvider, useForm } from 'react-hook-form'
 import axios from 'axios'
+import { createNewProduct } from '@/lib/firestore/products/write'
+import { useImageUpload, useMultipleImageUpload } from '@/app/services/cloudinary'
+import { toast } from 'react-hot-toast'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ProductsSchema } from '@/app/schema/admin'
 
 const page = () => {
     
@@ -15,10 +20,19 @@ const page = () => {
     const [uploadUrl , setUploadedUrls] = useState()
     const [data ,setData] = useState(null)
 
-    const methods = useForm()
-    const handleData = (data) => {
-     console.log("$$$$$",data,description,imageList,featureImage)
- 
+    const methods = useForm(
+     { resolver: zodResolver(ProductsSchema), defaultValues: { name: "", email: "" } }
+    )
+    const handleData = async (data) => {
+     try {
+     const featureImageURL = await useImageUpload(featureImage , "products")
+     const imageListURL = await useMultipleImageUpload(imageList , "products")
+      await createNewProduct({data:{...data,description:description,featureImage:featureImageURL?.fileUrl},imageList:imageListURL?.fileUrls})
+      methods.reset()
+      toast.success("Successfully Created")
+     } catch (error) {
+      toast.error(error.response?.data || error.message)
+     }
     }
   return (
     <main className='p-5 flex flex-col gap-5'>
