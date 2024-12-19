@@ -1,6 +1,7 @@
 import { Button } from '@/app/components/Button'
 import Link from 'next/link'
 import React from 'react'
+import ListView from './components/ListView'
 
 const page = () => {
   return (
@@ -11,6 +12,7 @@ const page = () => {
    <Button className="!bg-[#313131] !rounded-lg">Create</Button>
    </Link>
    </div>
+   <ListView/>
  </main>
   )
 }

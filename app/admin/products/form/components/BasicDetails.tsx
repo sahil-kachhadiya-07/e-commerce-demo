@@ -19,7 +19,7 @@ const BasicDetails = () => {
         <FieldInput name="shortdescription" label="Short Description" placeholder='Enter Short Description' required/>
         <FieldSelect options={Brands} label="Brand" required name='brandId' firstChild='Select Brand'/>
         <FieldSelect options={Categories} label="Category" required name='categoryId' firstChild='Select Category'/> 
-        <FieldInput name="stocks" label="Stocks" placeholder='Enter Stocks' required/>
+        <FieldInput name="stocks" label="Stocks" type='number' placeholder='Enter Stocks' required/>
         <FieldInput name="price" type='number' label="Price" placeholder='Enter Price' required/>
         <FieldInput name="saleprice" type='number' label="Sale Price" placeholder='Enter Sale Price' required/>
     </section>

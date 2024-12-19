@@ -1,6 +1,7 @@
 import { Timestamp, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
 import { db } from "../fierbase";
 import { type } from "os";
+import React from "react";
 
 interface Product {
     data:{
@@ -17,7 +18,7 @@ interface Product {
     description?:string
 }
 
-export const createNewProduct = async ({data,imageList,description}) => {
+export const createNewProduct  = async ({data,imageList,description}) => {
     if(!data)
     {
         throw new Error("data is Required");
@@ -47,11 +48,11 @@ export const createNewProduct = async ({data,imageList,description}) => {
 
 }
 
-export const deleteCategory = async ({id}) => {
+export const deleteProduct = async ({id}) => {
     if(!id)
     {
       throw new Error("ID is require")
     }
-    await deleteDoc(doc(db,`categories/${id}`))
+    await deleteDoc(doc(db,`products/${id}`))
    }
    

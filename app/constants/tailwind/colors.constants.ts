@@ -36,6 +36,7 @@ const RED_COLORS = {
 const GREEN_COLORS = {
     green: "#00C12A",
     "green-100": "#F2FFF5",
+    "green-700":"#06402B"
 };
 
 export const COLORS = {
