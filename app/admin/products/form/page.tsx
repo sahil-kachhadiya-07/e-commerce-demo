@@ -33,12 +33,15 @@ const page = () => {
       setIsLoading(true)
      try {
      const featureImageURL = await useImageUpload(featureImage , "products")
-     const imageListURL = imageList.length>0 && await useMultipleImageUpload(imageList , "products")
-      await createNewProduct({data:{...data,description:description,featureImage:featureImageURL?.fileUrl},imageList:imageListURL?.fileUrls})
+     let imageListURL = null;
+     if (imageList && imageList.length > 0) {
+      imageListURL = await useMultipleImageUpload(imageList, "products");
+    }
+     const response = await createNewProduct({data:{...data,featureImage:featureImageURL?.fileUrl},imageList:imageListURL?.fileUrls,description:description})
       methods.reset()
       setFeatureImage(null)
       setImageList([])
-      toast.success("Successfully Created")
+      toast.success("Product Successfully Created")
      } catch (error) {
       toast.error(error.response?.data || error.message)
      }

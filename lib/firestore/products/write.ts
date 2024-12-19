@@ -14,9 +14,10 @@ interface Product {
         title:string
     }
     imageList?: string[]
+    description?:string
 }
 
-export const createNewProduct = async ({data,imageList}) => {
+export const createNewProduct = async ({data,imageList,description}) => {
     if(!data)
     {
         throw new Error("data is Required");
@@ -24,12 +25,22 @@ export const createNewProduct = async ({data,imageList}) => {
 
    const newId = doc(collection(db,'ids')).id
    try {
-    await setDoc(doc(db, `products/${newId}`), { 
+    const productData = {
       ...data,
       id: newId,
-      imageList:[...imageList],
-      timeStampCreate: Timestamp.now()
-    });
+      timeStampCreate: Timestamp.now(),
+    };
+    
+    if(description)
+    {
+      productData.description = description;
+    }
+    // Add `imageList` only if it exists and is not empty
+    if (imageList && imageList.length > 0) {
+      productData.imageList = [...imageList];
+    }
+
+    await setDoc(doc(db, `products/${newId}`), productData);
   } catch (error) {
     console.error("Error writing document: ", error);
   }
