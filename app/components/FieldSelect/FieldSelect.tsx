@@ -53,7 +53,7 @@ const FieldSelect: React.FC<FieldSelectProps> = ({
               {...props}
             />
             {fieldState.error && (
-              <p className="text-red-500 text-sm">
+              <p className="text-red-500 text-md pt-2">
                 {fieldState.error.message}
               </p>
             )}
