@@ -7,7 +7,7 @@ interface UploadImageProps {
   name: string; // Name for the input field
   [key: string]: any; // Allow additional props for flexibility
 }
-const UploadImage:React.FC<UploadImageProps> = ({image,imageList=[],label,name,...props}) => {
+const UploadImage:React.FC<UploadImageProps> = ({image,imageList=[],required,label,name,...props}) => {
     const [errorMessage, setErrorMessage] = useState("");
     const handleBlur = (e) => {
         if (!e.target.files.length) {
@@ -19,7 +19,7 @@ const UploadImage:React.FC<UploadImageProps> = ({image,imageList=[],label,name,.
   return (
     <div className="flex flex-col gap-1">
             <label className="text-gray-500 text-sm">{label} <span className='text-red-500'>*</span></label>
-           { image && (
+           {image && (
               <div className="flex justify-center items-center p-3">
                  {/* URL.createObjectURL used to convert file into url */}
                 <img
@@ -43,7 +43,7 @@ const UploadImage:React.FC<UploadImageProps> = ({image,imageList=[],label,name,.
               className="border border-solid shadow-sm p-1 w-full rounded-lg focus:outline-none"
               type="file"
               name={name}
-              onBlur={handleBlur}
+              onBlur={required ? handleBlur : undefined}
               {...props}
             />
               {errorMessage && (

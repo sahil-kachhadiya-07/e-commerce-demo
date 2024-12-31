@@ -2,6 +2,7 @@
 
 import { Button } from "@/app/components/Button";
 import { FieldInput } from "@/app/components/FieldInput";
+import { UploadImage } from "@/app/components/UploadImage";
 import { categorySchema } from "@/app/schema/admin";
 import { useImageReplace, useImageUpload } from "@/app/services/cloudinary";
 import { getCategory } from "@/lib/firestore/categories/read_server";
@@ -105,33 +106,14 @@ const Form = () => {
           onSubmit={methods.handleSubmit(id ? handleUpdate : handleCreate)}
           className="flex flex-col gap-3"
         >
-          <div className="flex flex-col gap-1">
-            <label className="text-gray-500 text-sm">Image <span className='text-red-500'>*</span></label>
-             {image && (
-              <div className="flex justify-center items-center p-3">
-                 {/* URL.createObjectURL used to convert file into url */}
-                <img
-                  className="h-20"
-                  src={image instanceof File ? URL.createObjectURL(image) : image}
-                  alt="image"
-                />
-              </div>
-            )}
-            <input
-              placeholder="Enter Image"
-              accept="image/*"
-              className="border border-solid shadow-sm p-1 w-full rounded-lg focus:outline-none"
-              type="file"
-              name="image"
-              ref={fileInputRef}
-              required={id?false:true}
-              onChange={(e) => {
-                if (e.target.files.length > 0) {
-                  setImage(e.target.files[0]);
-                }
-              }}
-            />
-          </div>
+           <UploadImage image={image} label="Image" name="image"
+            required={id ? false : true}
+            onChange={(e) => {
+              if (e.target.files.length > 0) {
+                setImage(e.target.files[0]);
+              }
+            }}
+          />
           <FieldInput
             placeholder="Enter Name"
             label="Name"
