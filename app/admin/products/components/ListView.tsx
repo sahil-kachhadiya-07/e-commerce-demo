@@ -1,5 +1,6 @@
 'use client'
 import { Button } from '@/app/components/Button'
+import { ProductTableHeaders } from '@/app/constants/common'
 import { UseImageDelete } from '@/app/services/cloudinary'
 import { useCategories } from '@/lib/firestore/categories/read'
 import { deleteCategory } from '@/lib/firestore/categories/write'
@@ -31,30 +32,16 @@ const ListView = () => {
             {/* <h1 className='text-xl'>Products</h1> */}
             <table className='border-separate  border-spacing-y-3'>
                 <thead>
-                    <tr>
-                        <th className='font-semibold border-y bg-white px-3 py-3 border-l rounded-l-lg'>
-                            SN
-                        </th>
-                        <th className='font-semibold border-y bg-white px-3 py-3'>Image</th>
-                        <th className='font-semibold border-y bg-white px-3 py-3 text-left'>
-                            Title
-                        </th>
-                        <th className='font-semibold border-y bg-white px-3 py-3 text-left'>
-                            Price
-                        </th>
-                        <th className='font-semibold border-y bg-white px-3 py-3 text-left'>
-                            Stock
-                        </th>
-                        <th className='font-semibold border-y bg-white px-3 py-3 text-left'>
-                            Orders
-                        </th>
-                        <th className='font-semibold border-y bg-white px-3 py-3 text-left'>
-                            Status
-                        </th>
-                        <th className='font-semibold border-y bg-white px-3 py-3 border-r rounded-r-lg'>
-                            Actions
-                        </th>
-                    </tr>
+                <tr>
+    {ProductTableHeaders.map((header, index) => (
+      <th
+        key={index}
+        className={`font-semibold border-y bg-white px-3 py-3 ${header.className}`}
+      >
+        {header.name}
+      </th>
+    ))}
+  </tr>
                 </thead>
                 <tbody>
                     {products?.map((item, index) => {

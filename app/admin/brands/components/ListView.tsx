@@ -1,5 +1,6 @@
 'use client'
 import { Button } from '@/app/components/Button'
+import {  TableHeaders } from '@/app/constants/common'
 import { UseImageDelete } from '@/app/services/cloudinary'
 import { useBrands } from '@/lib/firestore/brands/read'
 import { deleteBrand } from '@/lib/firestore/brands/write'
@@ -26,18 +27,16 @@ const ListView = () => {
       <h1 className='text-xl'>Brands</h1>
       <table className='border-separate  border-spacing-y-3'>
         <thead>
-          <tr>
-            <th className='font-semibold border-y bg-white px-3 py-3 border-l rounded-l-lg'>
-              SN
-            </th>
-            <th className='font-semibold border-y bg-white px-3 py-3'>Image</th>
-            <th className='font-semibold border-y bg-white px-3 py-3 text-left'>
-              Name
-            </th>
-            <th className='font-semibold border-y bg-white px-3 py-3 border-r rounded-r-lg'>
-              Actions
-            </th>
-          </tr>
+        <tr>
+    {TableHeaders.map((header, index) => (
+      <th
+        key={index}
+        className={`font-semibold border-y bg-white px-3 py-3 ${header.className}`}
+      >
+        {header.name}
+      </th>
+    ))}
+  </tr>
         </thead>
         <tbody>
           {brands?.map((item, index) => {

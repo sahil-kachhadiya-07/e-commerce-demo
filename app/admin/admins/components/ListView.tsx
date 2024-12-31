@@ -1,5 +1,6 @@
 'use client'
 import { Button } from '@/app/components/Button'
+import { AdminTableHeaders } from '@/app/constants/common'
 import { UseImageDelete } from '@/app/services/cloudinary'
 import { useAdmins } from '@/lib/firestore/admins/read'
 import { deleteAdmin } from '@/lib/firestore/admins/write'
@@ -28,16 +29,14 @@ const ListView = () => {
       <table className='border-separate  border-spacing-y-3'>
         <thead>
           <tr>
-            <th className='font-semibold border-y bg-white px-3 py-3 border-l rounded-l-lg'>
-              SN
-            </th>
-            <th className='font-semibold border-y bg-white px-3 py-3'>Image</th>
-            <th className='font-semibold border-y bg-white px-3 py-3 text-left'>
-              Name
-            </th>
-            <th className='font-semibold border-y bg-white px-3 py-3 border-r rounded-r-lg'>
-              Actions
-            </th>
+            {AdminTableHeaders.map((header, index) => (
+              <th
+                key={index}
+                className={`font-semibold border-y bg-white px-3 py-3 ${header.className}`}
+              >
+                {header.label}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
