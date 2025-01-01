@@ -52,7 +52,6 @@ const ListView = () => {
   )
 }
 
-
 const Row = ({ index, item }) => {
   const [isDeleting, setIsDeleting] = useState(false)
   const router = useRouter()

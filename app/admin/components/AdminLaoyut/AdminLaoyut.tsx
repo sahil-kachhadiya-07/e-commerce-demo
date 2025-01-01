@@ -57,7 +57,7 @@ function AdminLayout ({ children }: LayoutProps) {
         <Sidebar data={sideMenuList} />
       </div>
       {/* min-h-screen is used to full screen mode */}
-      <section className='flex-1 flex flex-col min-h-screen'>
+      <section className='flex-1 flex flex-col min-h-screen overflow-hidden'>
         <Header toggleSideBar={toggleSideBar} />
         <section className='flex-1 bg-[#eff3f4]'>{children}</section>
       </section>

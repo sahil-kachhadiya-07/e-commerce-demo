@@ -33,7 +33,7 @@ const Sidebar: React.FC<SideBarProps> = ({ data }) => {
   }
 
   return (
-    <section className='bg-white gap-10 flex flex-col  px-5 py-3 border-r h-screen overflow-hidden !w-[260px]'>
+    <section className='sticky top-0 bg-white gap-10 flex flex-col  px-5 py-3 border-r h-screen overflow-hidden !w-[260px]'>
       <div className='flex justify-center'>
         <MainLogoIcon className='!w-[200px]' />
       </div>

@@ -28,20 +28,20 @@ const ListView = () => {
         return <div>{error}</div>
     }
     return (
-        <div className='rounded-xl flex-1 flex flex-col gap-3 gap md:pr-5 md:px-0 px-0'>
+        <div className='rounded-xl flex-1 flex flex-col gap-3 gap md:pr-5 md:px-0 px-0 w-full overflow-x-auto'>
             {/* <h1 className='text-xl'>Products</h1> */}
             <table className='border-separate  border-spacing-y-3'>
                 <thead>
-                <tr>
-    {ProductTableHeaders.map((header, index) => (
-      <th
-        key={index}
-        className={`font-semibold border-y bg-white px-3 py-3 ${header.className}`}
-      >
-        {header.name}
-      </th>
-    ))}
-  </tr>
+                    <tr>
+                        {ProductTableHeaders.map((header, index) => (
+                            <th
+                                key={index}
+                                className={`font-semibold border-y bg-white px-3 py-3 ${header.className}`}
+                            >
+                                {header.name}
+                            </th>
+                        ))}
+                    </tr>
                 </thead>
                 <tbody>
                     {products?.map((item, index) => {
@@ -94,15 +94,15 @@ const Row = ({ index, item }) => {
                     <img className='h-10 w-10' src={item?.featureImage} />
                 </div>
             </td>
-            <td className='border-y bg-white px-3 py-3'>{item?.title}</td>
-            <td className='border-y bg-white px-3 py-3'>{item?.price}</td>
+            <td className='border-y bg-white px-3 py-3 whitespace-nowrap'>{item?.title}</td>
+            <td className='border-y bg-white px-3 py-3 whitespace-nowrap'>{(item?.saleprice < item?.price) && <span className='text-gray-400 text-xs line-through'>₹{item?.price}</span>}{" "}₹{item?.saleprice}</td>
             <td className='border-y bg-white px-3 py-3'>{item?.stocks}</td>
             <td className='border-y bg-white px-3 py-3'>{item?.orders ?? 0}</td>
             <td className='border-y bg-white px-3 py-3'>
                 <div className='flex '>
-                {(item?.stocks - (item?.orders ?? 0)) > 0 ? 
-                <div className='px-2 py-1 text-green bg-[#D1E7DD] rounded-md flex items-center justify-center'>Available</div> :
-                 <div className='px-2 py-1 text-red-700 bg-[#F8D7DA] rounded-md flex items-center justify-center'>Out of Stock</div>}
+                    {(item?.stocks - (item?.orders ?? 0)) > 0 ?
+                        <div className='px-2 py-1 text-green bg-[#D1E7DD] rounded-md flex items-center justify-center'>Available</div> :
+                        <div className='px-2 py-1 text-red-700 bg-[#F8D7DA] rounded-md flex items-center justify-center'>Out of Stock</div>}
                 </div>
             </td>
             <td className='border-y bg-white px-3 py-3 border-r rounded-r-lg'>

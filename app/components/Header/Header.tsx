@@ -20,7 +20,7 @@ const Header = () => {
         }
     ]
   return (
-   <nav className='w-full py-4 px-8 border-solid border-b-[1px] flex justify-between'>
+   <nav className='sticky top-0 w-full py-4 px-8 border-solid border-b-[1px] flex justify-between'>
         <MainLogoIcon className="p-3"/>
       <div className='flex flex-row gap-4 items-center font-semibold'>
       {
