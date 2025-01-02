@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 
 export interface Options {
   label: string;
-  value: string;
+  value: any;
 }
 
 export interface SelectProps {
@@ -28,7 +28,7 @@ const Select: React.FC<SelectProps> = ({
   label,
   classNames,
   required,
-  defaultValue = "",
+  defaultValue ,
   firstChild,
   ...props
 }) => {
@@ -49,7 +49,7 @@ const Select: React.FC<SelectProps> = ({
       )}
       <select
         id={name}
-        // defaultValue={defaultValue}
+        defaultValue={defaultValue}
         {...field} // Spread the `field` for React Hook Form integration
         className={`border border-solid shadow-sm bg-white p-1 w-full rounded-lg focus:outline-none ${
           classNames?.selectClassName ?? ""

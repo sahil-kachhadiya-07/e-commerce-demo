@@ -12,6 +12,7 @@ import { toast } from 'react-hot-toast'
 
 const ListView = () => {
   const { data: admins, error, isLoading } = useAdmins()
+  
   console.log('data', admins)
   if (isLoading) {
     return (
