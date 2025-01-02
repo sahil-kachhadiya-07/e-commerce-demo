@@ -1,5 +1,6 @@
 'use client'
 import { Button } from '@/app/components/Button'
+import { Select } from '@/app/components/Select'
 import { ProductTableHeaders } from '@/app/constants/common'
 import { UseImageDelete } from '@/app/services/cloudinary'
 import { useCategories } from '@/lib/firestore/categories/read'
@@ -13,10 +14,36 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast'
 
+ const data = [
+    {
+     label:"3 Items" , value:3
+ },   {
+    label:"5 Items" , value:5
+},   {
+    label:"7 Items" , value:7
+},   {
+    label:"10 Items" , value:10
+},   {
+    label:"50 Items" , value:50
+}, {
+    label:"100 Items" , value:100
+},]
 const ListView = () => {
+    const [pageLimit , setPageLimit] = useState(10)
     const { data: products, error, isLoading } = useProducts()
+      const [currentPage, setCurrentPage] = useState(1)
     console.log('products%%', products)
-    //   console.log('data', categories)
+     const totalPages = Math.ceil(products?.length / pageLimit)
+  const currentData = products?.slice(
+    (currentPage - 1) * pageLimit,
+    currentPage * pageLimit
+  )
+
+  const handlePageChange = (page) => {
+    if (page > 0 && page <= totalPages) {
+      setCurrentPage(page)
+    }
+  }
     if (isLoading) {
         return (
             <div>
@@ -44,15 +71,33 @@ const ListView = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {products?.map((item, index) => {
+                    {currentData?.map((item, index) => {
                         return (
                             <React.Fragment key={index}>
-                                <Row index={index} item={item} />
+                                <Row index={index}  item={item} />
                             </React.Fragment>
                         )
                     })}
                 </tbody>
             </table>
+              <div className='flex justify-between items-center mt-4 w-full'>
+            <Button variant='form'
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </Button>
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
+     <Button
+          variant='form'
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </Button>
+      </div>
         </div>
     )
 }
