@@ -8,7 +8,8 @@ interface HeaderProps {
 
 const Header:React.FC<HeaderProps> = ({toggleSideBar}) => {
   return (
-    <section className='bg-white border-b px-4 py-4 flex flex-row gap-3 items-center'>
+    //sticky does not work under the overflow hidden so we have used fixed
+    <section className='fixed w-full bg-white border-b px-4 py-4 flex flex-row gap-3 items-center'>
         <div className='flex items-center justify-center md:hidden'><button onClick={toggleSideBar}><Menu/></button></div>
         <h1 className='text-xl font-semibold'>
             Dashboard
