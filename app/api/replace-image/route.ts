@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
 import { Readable } from 'stream';
-import { getPublicIdFromUrl } from '../delete-image/route';
+import { getPublicIdFromUrl } from '@/app/utils/common';
 
 // Configure Cloudinary with your credentials
 cloudinary.config({

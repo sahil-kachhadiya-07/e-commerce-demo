@@ -1,3 +1,4 @@
+// Extract public ID from the Cloudinary URL
 export function getPublicIdFromUrl(url) {
     const regex = /\/v\d+\/(.*)\.(\w+)$/;
     const match = url.match(regex);

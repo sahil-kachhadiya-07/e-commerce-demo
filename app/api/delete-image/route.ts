@@ -1,3 +1,4 @@
+import { getPublicIdFromUrl } from '@/app/utils/common';
 import { v2 as cloudinary } from 'cloudinary';
 
 // Set up Cloudinary configuration using environment variables
@@ -6,18 +7,6 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
-// Extract public ID from the Cloudinary URL
-export function getPublicIdFromUrl(url) {
-  const regex = /\/v\d+\/(.*)\.(\w+)$/;
-  const match = url.match(regex);
-
-  if (match && match[1]) {
-    return match[1]; // Returns the public ID (folder + filename without extension)
-  }
-
-  throw new Error('Invalid Cloudinary URL');
-}
 
 export async function DELETE(request) {
   try {
